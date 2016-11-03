@@ -1,0 +1,15 @@
+<ion-view view-title="Dashboard">
+  <ion-content class="padding" ng-controller="DashCtrl as dc">
+    <div class="card">
+        <div class="item item-divider">
+            Dollar Progession
+        </div>
+        <div class="item item-text-wrap">
+          <canvas id="line" class="chart chart-line" chart-data="dc.data"
+          chart-labels="dc.labels" chart-series="dc.series" chart-options="dc.options"
+          chart-dataset-override="dc.datasetOverride" chart-click="onClick">
+        </canvas>
+        {{dc.dolarInfo}}
+
+    </div>
+</ion-view>
