@@ -4,7 +4,7 @@ angular.module('starter.controllers', [])
 	var self = this;
 	self.loading = false;
 	self.labels = ["0", "1", "2", "3", "4", "5"];
-	self.series = ['Series A'];
+	self.series = ['Dolar Blue', 'Dolar Oficial'];
 	self.options = {
 		scales: {
 			yAxes: [
@@ -17,7 +17,8 @@ angular.module('starter.controllers', [])
 			]
 		}
 	};
-	self.data = localStorage.getItem("dollarData") ? JSON.parse(localStorage.getItem("dollarData")) : [];
+	self.datablue = localStorage.getItem("dollarDataBlue") ? JSON.parse(localStorage.getItem("dollarDataBlue")) : [];
+	self.dataoficial = localStorage.getItem("dollarDataOficial") ? JSON.parse(localStorage.getItem("dollarDataOficial")) : [];
 
 	self.init = function(){
 		self.loading = true;
@@ -25,18 +26,25 @@ angular.module('starter.controllers', [])
 		.then(function(data) {
 			self.dollarInfo = data;
 			self.loading = false;
-			self.data.push(data.blue);
-			if (!localStorage.getItem("dollarData")) {
-				localStorage.setItem("dollarData", JSON.stringify(self.data));
-			}
-			if (JSON.parse(localStorage.getItem("dollarData")).length >= 6) {
-				self.data.shift();
-				localStorage.setItem("dollarData", JSON.stringify(self.data));
-			} else {
-				localStorage.setItem("dollarData", JSON.stringify(self.data));
-			}
+			self.datablue.push(data.blue);
+			self.dataoficial.push(data.libre);
+			self.setDolarData('dollarDataBlue', self.datablue);
+			self.setDolarData('dollarDataOficial', self.dataoficial);
+			self.data = (localStorage.getItem("dollarDataBlue") && localStorage.getItem("dollarDataOficial")) ? [JSON.parse(localStorage.getItem("dollarDataBlue")), JSON.parse(localStorage.getItem("dollarDataOficial"))] : [];
 			return self.dolarInfo;
 		});
+	};
+
+	self.setDolarData = function(dolarTypeKey, dolarArray){
+		if (!localStorage.getItem(dolarTypeKey)) {
+			localStorage.setItem(dolarTypeKey, JSON.stringify(dolarArray));
+		}
+		if (JSON.parse(localStorage.getItem(dolarTypeKey)).length >= 6) {
+			dolarArray.shift();
+			localStorage.setItem(dolarTypeKey, JSON.stringify(dolarArray));
+		} else {
+			localStorage.setItem(dolarTypeKey, JSON.stringify(dolarArray));
+		}
 	};
 	self.init();
 
