@@ -1,20 +1,44 @@
 angular.module('starter.controllers', [])
 
 .controller('DashCtrl', function($scope, dataService) {
-      var self = this;
-      self.labels = ["Lunes", "Martes", "Miercoles", "Jueves", "Sabado", "Domingo"];
-      self.series = ['Series A'];
-      self.data = [15, 15.20 , 15.14, 15.26 , 15.30 , 15.40 ];
+	var self = this;
+	self.loading = false;
+	self.labels = ["0", "1", "2", "3", "4", "5"];
+	self.series = ['Series A'];
+	self.options = {
+		scales: {
+			yAxes: [
+				{
+					id: 'y-axis-1',
+					type: 'linear',
+					display: true,
+					position: 'left'
+				}
+			]
+		}
+	};
+	self.data = localStorage.getItem("dollarData") ? JSON.parse(localStorage.getItem("dollarData")) : [];
 
-      init();
-
-      function init() {
-        return dataService.getData()
-        .then(function(data) {
-          self.dolarInfo = data;
-          return self.dolarInfo;
-        });
-      }
+	self.init = function(){
+		self.loading = true;
+		return dataService.getData()
+		.then(function(data) {
+			self.dollarInfo = data;
+			self.loading = false;
+			self.data.push(data.blue);
+			if (!localStorage.getItem("dollarData")) {
+				localStorage.setItem("dollarData", JSON.stringify(self.data));
+			}
+			if (JSON.parse(localStorage.getItem("dollarData")).length >= 6) {
+				self.data.shift();
+				localStorage.setItem("dollarData", JSON.stringify(self.data));
+			} else {
+				localStorage.setItem("dollarData", JSON.stringify(self.data));
+			}
+			return self.dolarInfo;
+		});
+	};
+	self.init();
 
 })
 
