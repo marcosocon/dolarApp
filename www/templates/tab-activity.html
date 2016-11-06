@@ -1,22 +1,20 @@
 <ion-view view-title="Actividad">
-  <ion-content ng-controller="ActivityCtrl as ac">
-    <ion-list>
-      <ion-item class="item-remove-animate item-icon-right" ng-repeat="move in ac.moves" type="item-text-wrap">
-        <h2>{{move.amount}}</h2>
-        <p>{{move.description}}</p>
-        <i class="icon ion-chevron-right icon-accessory"></i>
-        <ion-option-button class="button-assertive" ng-click="ac.remove(move)">
-          Borrar
-        </ion-option-button>
-      </ion-item>
-    </ion-list>
-    <div class="row">
-      <div class="col">
-        <button class="button button-balanced" ng-click="ac.addPlusMove()">Añadir Ingreso</button>
-      </div>
-      <div class="col">
-        <button class="button button-assertive">Añadir Egreso</button>
-      </div>
-    </div>
-  </ion-content>
+	<ion-content>
+		<div class="bar bar-header bar-positive">
+			<div class="h1 title">Actividades</div>
+			<button class="button button-icon icon ion-plus-round" ng-click="openModal()"></button>
+		</div>
+		<br>
+		<br>
+		<ion-list>
+			<ion-item class="item-remove-animate item-icon-right" ng-repeat="move in moves" type="item-text-wrap">
+				<h2>{{move.amount | currency}}</h2>
+				<p>{{move.description}}</p>
+				<i class="icon ion-chevron-right icon-accessory"></i>
+				<ion-option-button class="button-assertive" ng-click="remove(move)">
+					Borrar
+				</ion-option-button>
+			</ion-item>
+		</ion-list>
+	</ion-content>
 </ion-view>

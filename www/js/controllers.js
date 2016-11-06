@@ -50,20 +50,30 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('ActivityCtrl', function($ionicPopup) {
-    var self = this;
-    self.moves = [];
+.controller('ActivityCtrl', function($scope , $ionicModal) {
+    $scope.moves = [];
 
-    self.addPlusMove = function(){
-        $ionicPopup.prompt({
-            title:"Nueva Tarea",
-            inputPlaceholder: "Que tienes que hacer?",
-            okText: "Crear!"
-        });
+    $scope.addMove = function(newMove){
+        if (newMove && newMove.amount && newMove.currency && newMove.type) {
+            $scope.moves.push(newMove);
+            $scope.closeModal();
+        }
+    };
+    $ionicModal.fromTemplateUrl('templates/modal.html', {
+        scope: $scope
+    }).then(function(modal) {
+        $scope.modal = modal;
+    });
+    $scope.openModal = function() {
+        $scope.modal.show();
+    };
+    $scope.closeModal = function() {
+        $scope.modal.hide();
     };
 
-    self.remove = function(move){
-        self.moves.splice(move.$index, 1);
+    $scope.remove = function(move){
+        console.log(move);
+        $scope.moves.splice(move.$index, 1);
     };
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.

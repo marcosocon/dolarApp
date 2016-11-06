@@ -1,28 +1,31 @@
 <ion-view view-title="Estadísticas">
-  <ion-content class="padding" ng-controller="DashCtrl as dc">
-    <div class="row">
-        <div class="col card text-center">
-            <h4>Dólar Oficial</h4>
-            <h4>{{dc.dollarInfo.libre | currency}}</h4>
-        </div>
-        <div class="col card text-center">
-            <h4>Dólar Blue</h4>
-            <h4>{{dc.dollarInfo.blue | currency}}</h4>
-        </div>
-    </div>
-    <div class="card">
-        <div class="item item-divider">
-            Precio del dólar en los ultimos 5 ingresos
-        </div>
-        <div class="item item-text-wrap">
-          <canvas id="line" class="chart chart-line" chart-data="dc.data"
-          chart-labels="dc.labels" chart-series="dc.series" chart-options="dc.options"
-          chart-dataset-override="dc.datasetOverride" chart-click="onClick">
-        </canvas>
-        </div>
-    </div>
-    <button class="button button-block button-positive" ng-click="dc.init()">Recargar</button>
-    <div ng-show="dc.loading" class="text-center">
-        <ion-spinner></ion-spinner>
-    </div>
+	<div class="bar bar-header bar-positive">
+		<div class="h1 title">Estadisticas</div>
+	</div>
+	<ion-content class="padding" ng-controller="DashCtrl as dc">
+		<br>
+		<br>
+		<div class="row">
+			<div class="col card text-center">
+				<h4>Dólar Oficial</h4>
+				<h4>{{dc.dollarInfo.libre | currency}}</h4>
+			</div>
+			<div class="col card text-center">
+				<h4>Dólar Blue</h4>
+				<h4>{{dc.dollarInfo.blue | currency}}</h4>
+			</div>
+		</div>
+		<div class="card">
+			<div class="item item-divider">Precio del dólar en los ultimos 5 ingresos</div>
+			<div class="item item-text-wrap">
+				<canvas id="line" class="chart chart-line" chart-data="dc.data"
+				chart-labels="dc.labels" chart-series="dc.series" chart-options="dc.options"
+				chart-dataset-override="dc.datasetOverride" chart-click="onClick">
+				</canvas>
+			</div>
+		</div>
+		<button class="button button-block button-positive" ng-click="dc.init()">Recargar</button>
+		<div ng-show="dc.loading" class="text-center">
+			<ion-spinner></ion-spinner>
+		</div>
 </ion-view>
