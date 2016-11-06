@@ -104,6 +104,8 @@ angular.module('starter.controllers', ['lodash'])
 
     $scope.remove = function(move){
         removeByAttr($scope.moves, '$$hashKey', move.$$hashKey);
+        $scope.getPesosBalance();
+        $scope.getDollarsBalance();
     };
 
     $scope.getPesosBalance();
