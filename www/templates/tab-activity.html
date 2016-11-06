@@ -7,7 +7,9 @@
 		<br>
 		<br>
 		<ion-list>
-			<ion-item class="item-remove-animate item-icon-right" ng-repeat="move in moves" type="item-text-wrap">
+			<ion-item class="item-remove-animate item-icon-left item-icon-right" ng-repeat="move in moves" type="item-text-wrap">
+        <i ng-show="move.type === 'Ingreso'" class="icon ion-ios-plus"></i>
+        <i ng-show="move.type === 'Egreso'" class="icon ion-ios-minus"></i>
 				<h2>{{move.amount | currency}}</h2>
 				<p>{{move.description}}</p>
 				<i class="icon ion-chevron-right icon-accessory"></i>
