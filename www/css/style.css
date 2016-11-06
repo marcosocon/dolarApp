@@ -5,3 +5,9 @@
 .ion-ios-minus{
   color: #D64541;
 }
+.to-right{
+  float: right;
+}
+.to-left{
+  float: left;
+}

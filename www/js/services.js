@@ -2,6 +2,12 @@ angular
      .module('starter.services', [])
      .factory('dataService', dataService);
 
+angular
+    .module('lodash', [])
+    .factory('_', ['$window', function($window) {
+      return $window._; // assumes underscore has already been loaded on the page
+    }]);
+
  dataService.$inject = ['$http'];
 
  function dataService($http) {

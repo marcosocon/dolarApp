@@ -1,22 +1,31 @@
 <ion-view view-title="Actividad">
-	<ion-content>
 		<div class="bar bar-header bar-positive">
 			<div class="h1 title">Actividades</div>
 			<button class="button button-icon icon ion-plus-round" ng-click="openModal()"></button>
 		</div>
-		<br>
-		<br>
+		<ion-content class="has-header">
 		<ion-list>
 			<ion-item class="item-remove-animate item-icon-left item-icon-right" ng-repeat="move in moves" type="item-text-wrap">
-        <i ng-show="move.type === 'Ingreso'" class="icon ion-ios-plus"></i>
-        <i ng-show="move.type === 'Egreso'" class="icon ion-ios-minus"></i>
+				<i ng-show="move.type === 'Ingreso'" class="icon ion-ios-plus"></i>
+				<i ng-show="move.type === 'Egreso'" class="icon ion-ios-minus"></i>
 				<h2>{{move.amount | currency}}</h2>
 				<p>{{move.description}}</p>
 				<i class="icon ion-chevron-right icon-accessory"></i>
-				<ion-option-button class="button-assertive" ng-click="remove(move)">
-					Borrar
-				</ion-option-button>
+				<ion-option-button class="button-assertive" ng-click="remove(move)">Borrar</ion-option-button>
 			</ion-item>
+			<div class="card">
+				<div class="item item-divider">Resumen Pesos :</div>
+				<div class="item item-text-wrap">Ingresos: <span class="to-right">{{totalPesosIncome | currency}}</span></div>
+				<div class="item item-text-wrap">Egresos: <span class="to-right">{{totalPesosOutcome | currency}}</span></div>
+				<div class="item item-divider">Total: <span class="to-right">{{totalPesosIncome - totalPesosOutcome | currency}}</span></div>
+			</div>
+			<div class="card">
+				<div class="item item-divider">Resumen Dolares :</div>
+				<div class="item item-text-wrap">Ingresos: <span class="to-right">{{totalDollarsIncome | currency}}</span> </div>
+				<div class="item item-text-wrap">Egresos: <span class="to-right">{{totalDollarsOutcome | currency}}</span></div>
+				<div class="item item-divider">Total: <span class="to-right">{{totalDollarsIncome - totalDollarsOutcome | currency}}</span></div>
+			</div>
+
 		</ion-list>
 	</ion-content>
 </ion-view>

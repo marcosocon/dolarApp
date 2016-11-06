@@ -1,4 +1,4 @@
-angular.module('starter.controllers', [])
+angular.module('starter.controllers', ['lodash'])
 
 .controller('DashCtrl', function($scope, dataService) {
 	var self = this;
@@ -59,7 +59,36 @@ angular.module('starter.controllers', [])
             $scope.moves.push(newMove);
             $scope.closeModal();
         }
+        $scope.getPesosBalance();
+        $scope.getDollarsBalance();
     };
+
+    $scope.getPesosBalance = function(){
+      $scope.totalPesosIncome = 0;
+      $scope.totalPesosOutcome = 0;
+      var moneyPlus = _.filter($scope.moves, {'type': 'Ingreso', 'currency': 'Pesos'});
+      _.forEach(moneyPlus, function(move){
+        $scope.totalPesosIncome += move.amount;
+      });
+      var moneyMinus = _.filter($scope.moves, {'type': 'Egreso', 'currency': 'Pesos'});
+      _.forEach(moneyMinus, function(move){
+        $scope.totalPesosOutcome += move.amount;
+      });
+    };
+
+    $scope.getDollarsBalance = function(){
+      $scope.totalDollarsIncome = 0;
+      $scope.totalDollarsOutcome = 0;
+      var moneyPlus = _.filter($scope.moves, {'type': 'Ingreso', 'currency': 'Dolares'});
+      _.forEach(moneyPlus, function(move){
+        $scope.totalDollarsIncome += move.amount;
+      });
+      var moneyMinus = _.filter($scope.moves, {'type': 'Egreso', 'currency': 'Dolares'});
+      _.forEach(moneyMinus, function(move){
+        $scope.totalDollarsOutcome += move.amount;
+      });
+    };
+
     $ionicModal.fromTemplateUrl('templates/modal.html', {
         scope: $scope
     }).then(function(modal) {
@@ -76,6 +105,9 @@ angular.module('starter.controllers', [])
     $scope.remove = function(move){
         removeByAttr($scope.moves, '$$hashKey', move.$$hashKey);
     };
+
+    $scope.getPesosBalance();
+    $scope.getDollarsBalance();
 
     var removeByAttr = function(arr, attr, value){
     var i = arr.length;
