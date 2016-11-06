@@ -50,7 +50,21 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('ChatsCtrl', function($scope) {
+.controller('ActivityCtrl', function($ionicPopup) {
+    var self = this;
+    self.moves = [];
+
+    self.addPlusMove = function(){
+        $ionicPopup.prompt({
+            title:"Nueva Tarea",
+            inputPlaceholder: "Que tienes que hacer?",
+            okText: "Crear!"
+        });
+    };
+
+    self.remove = function(move){
+        self.moves.splice(move.$index, 1);
+    };
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
   // To listen for when this page is active (for example, to refresh data),
