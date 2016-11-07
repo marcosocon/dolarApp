@@ -141,9 +141,11 @@ angular.module('starter.controllers', ['lodash'])
 //   $scope.chat = Chats.get($stateParams.chatId);
 // })
 
-.controller('AccountCtrl', function($scope) {
+.controller('AccountCtrl', function($scope, $ionicHistory) {
 	$scope.clearData = function(){
 		localStorage.clear();
+		$ionicHistory.clearCache();
+		$ionicHistory.clearHistory();
 	};
 	$scope.settings = {
 		enableFriends: true
