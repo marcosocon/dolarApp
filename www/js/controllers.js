@@ -50,17 +50,24 @@ angular.module('starter.controllers', ['lodash'])
 
 })
 
-.controller('ActivityCtrl', function($scope , $ionicModal) {
-    $scope.moves = [];
+.controller('ActivityCtrl', function($scope , $ionicModal, $ionicPopup) {
+    $scope.moves = localStorage.getItem("moves") ? JSON.parse(localStorage.getItem("moves")) : [];
     $scope.newMove = {};
 
     $scope.addMove = function(newMove){
-        if (newMove && newMove.amount && newMove.currency && newMove.type) {
+        if (newMove && _.isNumber(newMove.amount) && newMove.currency && newMove.type) {
             $scope.moves.push(newMove);
             $scope.closeModal();
-        }
-        $scope.getPesosBalance();
-        $scope.getDollarsBalance();
+			localStorage.setItem("moves", JSON.stringify($scope.moves));
+			$scope.getPesosBalance();
+			$scope.getDollarsBalance();
+        } else {
+			$ionicPopup.alert({
+				title: 'Error',
+				template: 'Por favor complete los campos.'
+			});
+			return false;
+		}
     };
 
     $scope.getPesosBalance = function(){
@@ -104,6 +111,7 @@ angular.module('starter.controllers', ['lodash'])
 
     $scope.remove = function(move){
         removeByAttr($scope.moves, '$$hashKey', move.$$hashKey);
+		$scope.moves = localStorage.getItem("moves");
         $scope.getPesosBalance();
         $scope.getDollarsBalance();
     };
