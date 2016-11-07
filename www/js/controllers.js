@@ -142,6 +142,9 @@ angular.module('starter.controllers', ['lodash'])
 // })
 
 .controller('AccountCtrl', function($scope) {
+	$scope.clearData = function(){
+		localStorage.clear();
+	};
 	$scope.settings = {
 		enableFriends: true
 	};
