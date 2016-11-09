@@ -88,8 +88,10 @@ angular.module('starter.controllers', ['lodash'])
 	$scope.getDollarsBalance = function(){
 		$scope.totalDollarsIncome = 0;
 		$scope.totalDollarsOutcome = 0;
-		var dollarDataArray = JSON.parse(localStorage.getItem("dollarDataBlue"));
-		$scope.lastDollar = parseFloat(dollarDataArray[dollarDataArray.length - 1]);
+		if(localStorage.getItem("dollarDataBlue")){
+			var dollarDataArray = JSON.parse(localStorage.getItem("dollarDataBlue"));
+			$scope.lastDollar = parseFloat(dollarDataArray[dollarDataArray.length - 1]);
+		}
 		var moneyPlus = _.filter($scope.moves, {'type': 'Ingreso', 'currency': 'Dolares'});
 		_.forEach(moneyPlus, function(move){
 			$scope.totalDollarsIncome += move.amount;
@@ -154,12 +156,22 @@ angular.module('starter.controllers', ['lodash'])
 //   $scope.chat = Chats.get($stateParams.chatId);
 // })
 
-.controller('AccountCtrl', function($scope, $ionicHistory) {
+.controller('AccountCtrl', function($scope, $ionicHistory, $ionicPopup) {
 	$scope.clearData = function(){
-		localStorage.clear();
-		$ionicHistory.clearCache();
-		$ionicHistory.clearHistory();
+		$ionicPopup.confirm({
+			title: 'Estás seguro?',
+			template: 'Esta accion borrará todos los datos almacenados.'
+		}).then(function(res) {
+			if(res) {
+				localStorage.clear();
+				$ionicHistory.clearCache();
+				$ionicHistory.clearHistory();
+			} else {
+				return false;
+			}
+		});
 	};
+
 	$scope.settings = {
 		enableFriends: true
 	};
