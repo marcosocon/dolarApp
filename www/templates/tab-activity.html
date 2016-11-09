@@ -17,13 +17,16 @@
 				<div class="item item-divider">Resumen Pesos :</div>
 				<div class="item item-text-wrap">Ingresos: <span class="to-right">{{totalPesosIncome | currency}}</span></div>
 				<div class="item item-text-wrap">Egresos: <span class="to-right">{{totalPesosOutcome | currency}}</span></div>
-				<div class="item item-divider">Total: <span class="to-right">{{totalPesosIncome - totalPesosOutcome | currency}}</span></div>
+				<div class="item item-divider">Total en Pesos: <span class="to-right">{{totalPesosBalance | currency}}</span></div>
 			</div>
 			<div class="card">
 				<div class="item item-divider">Resumen Dolares :</div>
 				<div class="item item-text-wrap">Ingresos: <span class="to-right">{{totalDollarsIncome | currency}}</span> </div>
 				<div class="item item-text-wrap">Egresos: <span class="to-right">{{totalDollarsOutcome | currency}}</span></div>
-				<div class="item item-divider">Total: <span class="to-right">{{totalDollarsIncome - totalDollarsOutcome | currency}}</span></div>
+				<div class="item item-divider">Total en Dólares: <span class="to-right">{{totalDollarBalance | currency}}</span></div>
+			</div>
+			<div class="card" ng-show="totalEarning">
+				<div class="item item-divider" >Resumen Total : {{totalEarning | currency}}</div>
 			</div>
 
 		</ion-list>

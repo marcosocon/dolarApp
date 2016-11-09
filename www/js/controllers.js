@@ -61,6 +61,7 @@ angular.module('starter.controllers', ['lodash'])
 			localStorage.setItem("moves", JSON.stringify($scope.moves));
 			$scope.getPesosBalance();
 			$scope.getDollarsBalance();
+			$scope.getTotalBalance();
 		} else {
 			$ionicPopup.alert({
 				title: 'Error',
@@ -81,11 +82,14 @@ angular.module('starter.controllers', ['lodash'])
 		_.forEach(moneyMinus, function(move){
 			$scope.totalPesosOutcome += move.amount;
 		});
+		$scope.totalPesosBalance = 	$scope.totalPesosIncome - $scope.totalPesosOutcome;
 	};
 
 	$scope.getDollarsBalance = function(){
 		$scope.totalDollarsIncome = 0;
 		$scope.totalDollarsOutcome = 0;
+		var dollarDataArray = JSON.parse(localStorage.getItem("dollarDataBlue"));
+		$scope.lastDollar = parseFloat(dollarDataArray[dollarDataArray.length - 1]);
 		var moneyPlus = _.filter($scope.moves, {'type': 'Ingreso', 'currency': 'Dolares'});
 		_.forEach(moneyPlus, function(move){
 			$scope.totalDollarsIncome += move.amount;
@@ -94,6 +98,13 @@ angular.module('starter.controllers', ['lodash'])
 		_.forEach(moneyMinus, function(move){
 			$scope.totalDollarsOutcome += move.amount;
 		});
+		$scope.totalDollarBalance = $scope.totalDollarsIncome - $scope.totalDollarsOutcome;
+	};
+
+	$scope.getTotalBalance = function(){
+		if (_.isNumber($scope.totalPesosBalance) && _.isNumber($scope.totalDollarBalance) && $scope.lastDollar) {
+			$scope.totalEarning = ($scope.totalPesosBalance + ($scope.totalDollarBalance * $scope.lastDollar));
+		}
 	};
 
 	$ionicModal.fromTemplateUrl('templates/modal.html', {
@@ -114,10 +125,12 @@ angular.module('starter.controllers', ['lodash'])
 		localStorage.setItem("moves", JSON.stringify($scope.moves));
 		$scope.getPesosBalance();
 		$scope.getDollarsBalance();
+		$scope.getTotalBalance();
 	};
 
 	$scope.getPesosBalance();
 	$scope.getDollarsBalance();
+	$scope.getTotalBalance();
 	var removeByAttr = function(arr, attr, value){
 		var i = arr.length;
 		while(i--){
