@@ -1,6 +1,6 @@
 {
   "name": "MyBolsillo",
-  "version": "1.1.1",
+  "version": "1.0.0",
   "description": "Organiza todos tus ingresos y egresos de dinero, tanto en pesos como en dolares!",
   "dependencies": {
     "gulp": "^3.5.6",
